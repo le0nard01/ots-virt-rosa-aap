@@ -39,14 +39,3 @@
                 ssh_authorized_keys:
                 - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCumY9z4uaPlQgzIshSJvIhvT+nq0C/+s59XHHm5xU/iQrRDqMRZyh8xenpnZmJm8W+Nzf7KNKEj1l+B7r4Yycxo92GamMWEPiTn1o+ZjOgQZKv13HpxFeVsSJzEuSyvSzzdNAqPzMg9FSuuqLWP4yhJ3tnMTAH+yA15TdCDiP/TWDNtSgx/1m+1G77yorfMDNpA1mkynEG+4sFKZuXhIk4hCixwMMLITdTIMLfde+2qHSZqymzwMTeEAgGHBganF2U7ozI7u/62s08zHlK7tU2qTgJCebn6v9In6A6Kgoqxz/T+Bya3DEuC3vL8N4UtAKdkMFoeJSr3WUqOf1rVHvcitaZiym3xhML3XiN2dpmjul6wsQn4q/KRYrh2V60dYUpsLpUESM1W0BA0UMRuCRUQucYVMBC8yLS/Hl/MIFBXmg3Vg9JnaBvnDZiKkM8HTV8PTG59/4Iu7NyCmsDshGM38dV/QsSnPEw5ZdTQlK+qNzzZ9VJuAr8f80mxN43UjzFWBPoG7tDwJc+S1r5rr0MAcIQRSlr/prJYnmywQFD3yDOoc9AMCgT6WHd92mmz6cjdzJFMueIHOhc4bmlFOIm8A9wruX2+n8O8n7DecCnwUbdwZ/1CcUdGeWIlNT84z6Wp0wsfkJLtVQVbstczIfmQO4VjAMZ2JvDwKkw+wRsCw==
             name: cloudinit
-  
-  - name: Wait for virtual machine IP to be populated
-    kubernetes.core.k8s_info:
-      api_version: kubevirt.io/v1
-      kind: VirtualMachineInstance
-      name: "{{ vm_name }}"
-      namespace: "{{ vm_namespace }}"
-    register: vmi
-    retries: 60
-    delay: 10
-    until: (vmi.resources[0].status.interfaces[0]['ipAddress'] | default('')) | length > 0
