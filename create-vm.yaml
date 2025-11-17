@@ -2,19 +2,11 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
   tasks:
-  - name: Create project
-    redhat.openshift.k8s:
-      state: present
-      definition:
-        apiVersion: project.openshift.io/v1
-        kind: Project
-        metadata:
-          name: "{{ vm_namespace }}"
   - name: Create fedora virtual machine
     redhat.openshift_virtualization.kubevirt_vm:
       state: present
-      name: "{{ vm_name }}"
-      namespace: "{{ vm_namespace }}"
+      name: fedora
+      namespace: ots
       labels:
         app: httpd
       instancetype:
