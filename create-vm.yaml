@@ -1,4 +1,6 @@
 - hosts: all  # Target all hosts in your inventory
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   tasks:
   - name: Create project
     redhat.openshift.k8s:
